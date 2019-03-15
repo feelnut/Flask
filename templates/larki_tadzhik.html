@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="jumbotron">
+      <h1 class="display-4">Информация о ларьках</h1>
+      <p class="lead">Здесь можно добавить, посмотреть или удалить ларьки</p>
+      <hr class="my-4">
+        <a href="{{ url_for('add_laryok') }}">
+            <button type="button" class="btn btn-secondary">Добавить ларёк</button>
+        </a>
+    </div>
+    {% for item in larki %}
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h3 class="card-title">{{ item[1] }}</h3>
+            <p class="card-text">{{ item[2] }}</p>
+            <a href="/laryok/{{ item[0] }}" class="btn btn-primary">Подробнее</a>
+          </div>
+          <a href="/del_laryok/{{item[0]}}">Снести ларёк</a>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div class="jumbotron">
+          <h1 class="display-4">{{ fruit[1] }}</h1>
+          <p class="lead">Стоимость: {{ fruit[2] }}</p>
+          <hr class="my-4">
+          <p>Количество: {{ fruit[3] }}</p>
+          <p>Ларёк: {{ fruit[4] }}</p>
+        </div>
+        <a href='/index'> <button type="button" class="btn btn-outline-info">Назад</button></a>
+{% endblock %}

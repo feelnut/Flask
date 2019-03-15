@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="jumbotron">
+      <h1 class="display-4">Информация о фруктах</h1>
+      <p class="lead">Здесь можно посмотреть и заказать продукты.</p>
+      <hr class="my-4">
+        <a href="{{ url_for('add_fruit') }}">
+            <button type="button" class="btn btn-secondary">Добавить продукт</button>
+        </a>
+    </div>
+    {% for item in fruits %}
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h3 class="card-title">{{ item[0] }}</h3>
+            <p class="card-text">Цена: {{ item[1] }}</p>
+            <p class="card-text">Количество: {{ item[2] }}</p>
+            <a href="/fruit/{{ item[3] }}" class="btn btn-primary">Подробнее</a>
+            <a href="/fruit_buy_tadzhik/{{ item[3] }}" class="btn btn-secondary">Заказать</a>
+            <a href="/del_fruit/{{ item[3] }}" class="btn btn-danger">Снять с продажи</a>
+          </div>
+        </div>
+    {% endfor %}
+{% endblock %}

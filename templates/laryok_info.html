@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="jumbotron">
+      <h1 class="display-4">{{ laryok[1] }}</h1>
+      <p class="lead">Адрес: {{ laryok[2] }}</p>
+      <hr class="my-4">
+      <p>Этот ларёк, как и любой другой, был построен в палеозойской эре и является всемирным наследием ЮНЕСКО.</p>
+    </div>
+    {% for item in fruits %}
+      {% if item[4] == laryok[0] %}
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h3 class="card-title">{{ item[0] }}</h3>
+            <p class="card-text">Цена: {{ item[1] }}</p>
+            <p class="card-text">Количество: {{ item[2] }}</p>
+            <a href="/fruit/{{ item[3] }}" class="btn btn-primary">Подробнее</a>
+            <a href="/fruit_buy_tadzhik/{{ item[3] }}" class="btn btn-secondary">Заказать</a>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+    <a href="/laryok_tadzhik"> <button type="button" class="btn btn-outline-info">Назад</button></a>
+{% endblock %}
