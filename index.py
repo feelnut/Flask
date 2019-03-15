@@ -1,11 +1,9 @@
 from flask import Flask, session, redirect, render_template, flash, url_for, request
 from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import secure_filename
 from Models import UsersModel, Laryok_Tadzhika, FruitModel
 from forms import LoginForm, RegisterForm, SearchPriceForm, SearchLaryokForm, AddLaryokForm, AddFruitForm, \
     ZakazFruitForm, BuyFruitForm
 from db import DB
-import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'tadzhik'
