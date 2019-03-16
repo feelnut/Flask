@@ -16,6 +16,7 @@ FruitModel(db.get_connection()).init_table()
 @app.route('/')
 @app.route('/index')
 def index():
+    # Основная страница авторизованного пользователя
     if 'username' not in session:
         return redirect('/login')
     if session['username'] == 'tadzhik':
@@ -26,6 +27,7 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # Страница для авторизации
     form = LoginForm()
     if form.validate_on_submit():
         user_name = form.username.data
@@ -41,12 +43,14 @@ def login():
 
 @app.route('/logout')
 def logout():
+    # Страница для выхода
     session.pop('username', 0)
     return redirect('/login')
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    # Страница регистрации
     form = RegisterForm()
     if form.validate_on_submit():
         users = UsersModel(db.get_connection())
@@ -61,6 +65,7 @@ def register():
 
 @app.route('/search_price', methods=['GET', 'POST'])
 def search_price():
+    # Страница пользователя с сортировкой по цене
     form = SearchPriceForm()
     if form.validate_on_submit():
         fruits = FruitModel(db.get_connection()).get_by_price(form.start_price.data, form.end_price.data)
@@ -71,6 +76,7 @@ def search_price():
 
 @app.route('/search_laryok', methods=['GET', 'POST'])
 def search_laryok():
+    # Страница пользователя с сортировкой по ларькам
     form = SearchLaryokForm()
     vse_larki = [(i[0], i[1]) for i in Laryok_Tadzhika(db.get_connection()).get_all()]
     form.laryok_id.choices = vse_larki
@@ -83,6 +89,8 @@ def search_laryok():
 
 @app.route('/fruit/<int:fruit_id>', methods=['GET'])
 def fruit(fruit_id):
+    # Страница для просмотра одного товара. В зависимости от вида пользователя
+    # подгружается разная информация
     if 'username' not in session:
         return redirect('/login')
     fruit = FruitModel(db.get_connection()).get(fruit_id)
@@ -103,6 +111,7 @@ def fruit(fruit_id):
 
 @app.route('/laryok/<int:laryok_id>', methods=['GET'])
 def laryok(laryok_id):
+    # Информация о ларьке(Аналогично сортировке по ларькам)
     if 'username' not in session:
         return redirect('/login')
     if session['username'] != 'tadzhik':
@@ -117,6 +126,7 @@ def laryok(laryok_id):
 
 @app.route('/laryok_tadzhik', methods=['GET'])
 def laryok_tadzhik():
+    # Страница администратора, отображающая информацию о ларьке
     if 'username' not in session:
         return redirect('/login')
     if session['username'] != 'tadzhik':
@@ -131,6 +141,7 @@ def laryok_tadzhik():
 
 @app.route('/add_laryok', methods=['GET', 'POST'])
 def add_laryok():
+    # Добавление ларька(Только для администратора)
     if 'username' not in session:
         return redirect('/login')
     if session['username'] == 'tadzhik':
@@ -147,6 +158,7 @@ def add_laryok():
 
 @app.route('/del_laryok/<int:laryok_id>', methods=['GET'])
 def del_laryok(laryok_id):
+    # Удаление ларька
     if 'username' not in session:
         return redirect('/login')
     if session['username'] == 'tadzhik':
@@ -161,6 +173,7 @@ def del_laryok(laryok_id):
 
 @app.route('/fruit_tadzhik', methods=['GET'])
 def fruit_tadzhik():
+    # Отображение продукта для администратора
     if 'username' not in session:
         return redirect('/login')
     if session['username'] != 'tadzhik':
@@ -175,6 +188,7 @@ def fruit_tadzhik():
 
 @app.route('/add_fruit', methods=['GET', 'POST'])
 def add_fruit():
+    # Добавление продукта администратором
     if 'username' not in session:
         return redirect('login')
     if session['username'] != 'tadzhik':
@@ -194,6 +208,7 @@ def add_fruit():
 
 @app.route('/fruit_buy_tadzhik/<int:fruit_id>', methods=['GET', 'POST'])
 def fruit_buy_tadzhik(fruit_id):
+    # Заказ продуктов адмнистратором
     if 'username' not in session:
         return redirect('login')
     if session['username'] != 'tadzhik':
@@ -208,6 +223,7 @@ def fruit_buy_tadzhik(fruit_id):
 
 @app.route('/fruit_buy/<int:fruit_id>', methods=['GET', 'POST'])
 def fruit_buy(fruit_id):
+    # Покупка продуктов пользователем
     if 'username' not in session:
         return redirect('login')
     form = BuyFruitForm()
@@ -223,6 +239,7 @@ def fruit_buy(fruit_id):
 
 @app.route('/del_fruit/<int:fruit_id>', methods=['GET'])
 def del_fruit(fruit_id):
+    # Снятие продукта с продажи
     if 'username' not in session:
         return redirect('/login')
     if session['username'] == 'tadzhik':
